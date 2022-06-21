@@ -1,0 +1,1 @@
+# solpay-template
