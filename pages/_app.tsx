@@ -1,5 +1,4 @@
 import '../styles/globals.css'
-// import 'tailwindcss/tailwind.css'
 import type { AppProps } from 'next/app'
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
@@ -20,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const network = WalletAdapterNetwork.Devnet;
 
-  const endpoint = clusterApiUrl(network);
+  const endpoint = process.env.NEXT_PUBLIC_CLUSTER_ENDPOINT || '';
 
   const wallets = [
     new PhantomWalletAdapter(),
