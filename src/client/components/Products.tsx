@@ -4,6 +4,7 @@ import Modal from "./Modal";
 export default function Products() {
 
   const [showModal, setShowModal] = useState(false);
+  const [showPaid, setPaid] = useState(false);
 
   return (
     <form>
