@@ -1,6 +1,6 @@
 import React  from 'react';
 import useIPFS from '../hooks/useIPFS';
-import styles from "../styles/Product.module.css"
+import styles from "../styles/HomePage.module.css"
 type Props = {
   hash: string,
   filename: string,
