@@ -1,18 +1,29 @@
 import Products from '../client/components/Products'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
+import styles from '../styles/HomePage.module.css'
 
 export default function HomePage() {
   const { publicKey } = useWallet()
+
+  const renderNotConnectedContainer = () => (
+    <div className={styles.buttonContainer}>
+      <WalletMultiButton
+        className={styles.ctaButton && styles.connectWalletButton}
+      />
+    </div>
+  )
   return (
-    <div className="m-auto flex max-w-4xl flex-col items-stretch gap-8 pt-24">
-      <h1 className="my-4 self-center bg-gradient-to-r from-fuchsia-600 to-pink-600 bg-clip-text p-0 text-6xl font-extrabold text-transparent">
-        SOLPAY TEMPLATE
-      </h1>
-      <div className="basis-1/4">
-        <WalletMultiButton className="!bg-gray-900 hover:scale-105" />
+    <div className={styles.App}>
+      <div className={styles.container}>
+        <header className={styles.headerContainer}>
+          <p className={styles.header}>🕸️ Solpay Comic Books Store 📖</p>
+          <p className={styles.subText}>accepting sols for comic books!</p>
+        </header>
+        <main> 
+          {publicKey ? "show the books" : renderNotConnectedContainer()}
+        </main>
       </div>
-      <Products></Products>
     </div>
   )
 }
