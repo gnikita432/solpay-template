@@ -1,7 +1,7 @@
 import Products from '../client/components/Products'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
-import styles from '../styles/HomePage.module.css'
+import styles from '../client/styles/HomePage.module.css'
 
 export default function HomePage() {
   const { publicKey } = useWallet()
