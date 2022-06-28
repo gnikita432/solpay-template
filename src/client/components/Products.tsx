@@ -1,6 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "../styles/Product.module.css";
 import IPFSDownload from './IpfsDownload';
+import { Modal } from '../components/Modal'
+import { useModal } from '../components/useModal'
 
 interface IProp {
   product: {
@@ -16,6 +18,8 @@ interface IProp {
 
 const Product: FC<IProp> = ({ product }) => {
   const { id, name, price, description, image_url } = product;
+  const { isShown, toggle } = useModal();
+  const [showPaid, setShowPaid] = useState(true);
 
   return (
     <div className={styles.productContainer}>
@@ -32,7 +36,11 @@ const Product: FC<IProp> = ({ product }) => {
         <div className={styles.productAction}>
           <div className={styles.productPrice}>{price} USDC</div>
           {/* I'm hardcoding these for now, we'll fetch the hash from the API later*/}
-          <IPFSDownload filename="spiderman-comic.zip" hash="QmTAEowJmKNUiP6sBkJ7yFinX6ZCBfN9duwWtsmz89G9kR" />
+          {showPaid ? <div>
+            <button onClick={toggle} className={styles.buyButton}>PAY</button>
+            <Modal isShown={isShown} hide={toggle} />
+          </div> : <IPFSDownload filename="spiderman-comic.zip" hash="QmTAEowJmKNUiP6sBkJ7yFinX6ZCBfN9duwWtsmz89G9kR" />
+          }
         </div>
       </div>
     </div>

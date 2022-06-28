@@ -3,13 +3,10 @@ import { useState, useEffect } from 'react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import styles from '../client/styles/HomePage.module.css'
-import { Modal } from '../client/components/Modal'
-import { useModal } from '../client/components/useModal'
 
 export default function HomePage() {
   const { publicKey } = useWallet()
   const [products, setProducts] = useState<any[]>([]);
-  const { isShown, toggle } = useModal();
 
   //Refetch products on wallet change
   useEffect(() => {
@@ -32,14 +29,10 @@ export default function HomePage() {
     </div>
   )
   const renderItemBuyContainer = () => (
-    <div>
-      <div className={styles.productsContainer}>
-        {products.map((product) => (
-          <Product key={product.id} product={product} />
-        ))}
-      </div>
-      <button onClick={toggle} className={styles.buyButton}>PAY</button>
-      <Modal isShown={isShown} hide={toggle} />
+    <div className={styles.productsContainer}>
+      {products.map((product) => (
+        <Product key={product.id} product={product} />
+      ))}
     </div>
   );
   return (
