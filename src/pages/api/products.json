@@ -1,0 +1,12 @@
+[
+    {
+      "id": 1,
+      "name": "Spider-Man",
+      "price": "0.04",
+      "description": "Get this spiderman comic book just for 0.04USD! This book is 36 pages",
+      "image_url": "https://cdn.asaha.com/assets/thumbs/682/682a05800e754f93818a17031887e51b.jpg",
+      "filename": "spiderman-comic.pdf",
+      "hash": "QmbXt9KQzeadh5iFjXKkxXMhsv4AbvMVX7jedomZr1hAmH"
+    }
+  ]
+

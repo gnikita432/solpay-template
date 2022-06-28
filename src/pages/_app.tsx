@@ -1,3 +1,4 @@
+import React, { useMemo } from "react";
 import '../client/styles/globals.css'
 import type { AppProps } from 'next/app'
 import {
@@ -14,12 +15,15 @@ import {
   TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets'
 
+import { clusterApiUrl } from "@solana/web3.js";
+
+
 // Default styles for wallet adapter
 require('@solana/wallet-adapter-react-ui/styles.css')
 
 function MyApp({ Component, pageProps }: AppProps) {
   const network = WalletAdapterNetwork.Devnet
-  const endpoint = process.env.NEXT_PUBLIC_CLUSTER_ENDPOINT || ''
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
   const wallets = [
     new PhantomWalletAdapter(),

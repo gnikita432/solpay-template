@@ -1,0 +1,181 @@
+.App {
+  height: 100vh;
+  background-color: rgb(20, 20, 20);
+  text-align: center;
+  overflow: hidden;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 30px 0 30px;
+  color: white;
+  position: relative;
+}
+
+.authedContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.header {
+  margin: 0;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.subText {
+  font-size: 25px;
+}
+
+.gradientText {
+  background: -webkit-linear-gradient(left, var(--SURGE_GREEN) 30%, var(--OCEAN_BLUE) 60%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.buttonContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  
+}
+.ctaButton {
+  height: 45px;
+  border: 0;
+  width: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.connectWalletButton {
+  color: white;
+  background: -webkit-linear-gradient(left, var(--PURPLE_DINO) , var(--OCEAN_BLUE) ,var(--SURGE_GREEN));
+  background-size: 200% 200%;
+  animation: gradient-animation 10s ease infinite;
+  max-width: 300px;
+}
+
+
+.mintButton {
+  background: -webkit-linear-gradient(left, var(--PURPLE_DINO), var(--OCEAN_BLUE));
+  background-size: 200% 200%;
+  animation: gradient-animation 4s ease infinite;
+  margin-left: 10px;
+}
+
+.buttonOff:disabled {
+  cursor: not-allowed;
+  background: #ccc;
+  color: #333;
+}
+
+.itemImage{
+  height: 100px;
+}
+
+.connectedContainer input[type='text'] {
+  display: inline-block;
+  padding: 10px;
+  width: 50%;
+  height: 60px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 10px;
+  margin: 50px auto;
+}
+
+.connectedContainer button {
+  height: 50px;
+}
+
+.buyButton {
+  border: none;
+  background-color: var(--OCEAN_BLUE);
+  color: #fff;
+  font-size: 16px;
+  border-radius: 3px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.downloadButton {
+  border: none;
+  background-color: var(--PURPLE_DINO);
+  color: #fff;
+  font-size: 16px;
+  border-radius: 3px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.createProductButton{
+  margin: 10px;
+  border: 0;
+  font-size: 20px;
+  font-weight: bold;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color:white;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  z-index: 1;
+}
+
+.productsContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+/* KeyFrames */
+@-webkit-keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
