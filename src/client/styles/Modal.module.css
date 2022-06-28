@@ -1,0 +1,75 @@
+.wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 700;
+  width: inherit;
+  outline: 0;
+}
+
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 500;
+}
+
+.styledModal {
+  z-index: 100;
+  background-color: var(--LIGHT_BLACK);
+  position: relative;
+  margin: auto;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.header {
+  border-radius: 8px 8px;
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  padding: 0.3rem;
+}
+
+.headerText {
+  color: var(--PURPLE_DINO);
+  font-size: 1.3em;
+  align-self: center;
+  padding-bottom: 2rem;
+}
+
+.closeButton {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  margin-left: 0.5rem;
+  background: none;
+  padding-bottom: 2rem;
+}
+
+.content {
+  padding: 10px;
+  max-height: 30rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: none;
+  background-color: var(--OCEAN_BLUE);
+  color: black;
+  font-size: 16px;
+  border-radius: 3px;
+  padding: 8px 50px;
+  cursor: pointer;
+  width: 20rem;
+}
+
+.option {
+  text-align: center;
+  color: #fff;
+  padding: 0.5rem;
+}
