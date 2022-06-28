@@ -1,17 +1,3 @@
-/* 
-solana color template
-SURGE GREEN
-HEX: #00FFA3
-
-OCEAN BLUE
-HEX: #03E1FF
-
-PURPLE DINO
-HEX: #DC1FFF
-
-BLACK
-HEX: #000000
-*/
 .App {
   height: 100vh;
   background-color: rgb(20, 20, 20);
@@ -47,7 +33,7 @@ HEX: #000000
 }
 
 .gradientText {
-  background: -webkit-linear-gradient(left, #60c657 30%, #35aee2 60%);
+  background: -webkit-linear-gradient(left, var(--SURGE_GREEN) 30%, var(--OCEAN_BLUE) 60%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -74,7 +60,7 @@ HEX: #000000
 
 .connectWalletButton {
   color: white;
-  background: -webkit-linear-gradient(left, #DC1FFF , #03E1FF ,#00FFA3);
+  background: -webkit-linear-gradient(left, var(--PURPLE_DINO) , var(--OCEAN_BLUE) ,var(--SURGE_GREEN));
   background-size: 200% 200%;
   animation: gradient-animation 10s ease infinite;
   max-width: 300px;
@@ -82,7 +68,7 @@ HEX: #000000
 
 
 .mintButton {
-  background: -webkit-linear-gradient(left, #4e44ce, #35aee2);
+  background: -webkit-linear-gradient(left, var(--PURPLE_DINO), var(--OCEAN_BLUE));
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
   margin-left: 10px;
@@ -117,7 +103,7 @@ HEX: #000000
 
 .buyButton {
   border: none;
-  background-color: #4664ff;
+  background-color: var(--OCEAN_BLUE);
   color: #fff;
   font-size: 16px;
   border-radius: 3px;
@@ -127,7 +113,7 @@ HEX: #000000
 
 .downloadButton {
   border: none;
-  background-color: #4664ff;
+  background-color: var(--PURPLE_DINO);
   color: #fff;
   font-size: 16px;
   border-radius: 3px;

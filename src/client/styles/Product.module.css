@@ -5,16 +5,16 @@
     align-items: center;
     max-width: 320px;
     height: 400px;
-    background-color: #141414;
+    background-color: var(--LIGHT_BLACK);
     margin: 15px;
     padding: 20px;
     border-radius: 16px;
-    border: 1px solid rgb(104, 104, 104);
+    border: 1px solid var(--LIGHT_GREY);
   }
   
   .productImage{
     width: 140px;
-    background-color: #141414;
+    background-color: var(--LIGHT_BLACK);
   }
   
   .productDetails{
@@ -37,7 +37,7 @@
     margin-bottom: 12px;
   }
   .productDescription{
-    color:rgb(186, 184, 184);
+    color:var(--DARK_WHITE);
   }
   
   .productAction{
