@@ -1,8 +1,8 @@
-import React from "react";
+import React , {FC} from "react";
 import styles from "../styles/Product.module.css";
 import IPFSDownload from './IpfsDownload';
 
-type Props = {
+interface IProp {
   product: {
     id: number;
     name: string;
@@ -14,7 +14,7 @@ type Props = {
   };
 }
 
-export default function Product({ product }: Props) {
+const Product: FC<IProp> =({ product }) => {
   const { id, name, price, description, image_url } = product;
 
   return (
@@ -38,3 +38,4 @@ export default function Product({ product }: Props) {
     </div>
   );
 }
+export default Product;
