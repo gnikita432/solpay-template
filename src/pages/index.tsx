@@ -8,7 +8,7 @@ export default function HomePage() {
   const { publicKey } = useWallet()
   const [products, setProducts] = useState<any[]>([]);
 
-  // we need to refetch the products whenever the userchanges( publickey )
+  //Refetch products on wallet change
   useEffect(() => {
     if (publicKey) {
       fetch(`/api/fetchProducts`)
