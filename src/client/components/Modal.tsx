@@ -13,7 +13,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
 
 }) => {
     const modal = (
-        <React.Fragment>
+        <>
             <div className={styles.backdrop}></div>
             <div className={styles.wrapper} >
                 <div className={styles.styledModal}>
@@ -28,7 +28,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </>
     );
 
     return isShown ? ReactDOM.createPortal(modal, document.body) : null;
