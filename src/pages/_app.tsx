@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import type { AppProps } from 'next/app';
+import React, { useMemo, FC } from 'react';
+import { AppProps, AppContext, default as NextApp } from 'next/app';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -11,15 +11,26 @@ import {
     TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
+import { AppInitialProps } from 'next/dist/shared/lib/utils';
 import { GlobalProvider } from '../client/components/context/GlobalProvider';
-import '../client/styles/globals.css';
+import { ThemeProvider } from '../client/components/context/ThemeProvider';
+import { paymentMethod } from '../client/types';
+import '../client/styles/index.css';
 
-// Default styles for wallet adapter
-require('@solana/wallet-adapter-react-ui/styles.css');
+interface CustomAppProps extends AppProps {
+    host: string;
+}
 
-function MyApp({ Component, pageProps }: AppProps) {
+const App: FC<CustomAppProps> & { getInitialProps(appContext: AppContext): Promise<AppInitialProps> } = ({
+    Component,
+    pageProps,
+    host,
+}) => {
+    const baseURL = `https://${host}`;
     const network = WalletAdapterNetwork.Devnet;
+    const storeAddress = process.env.NEXT_PUBLIC_STORE_ADDRESS || '';
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+    const link = useMemo(() => new URL(`${baseURL}/api/qrcode/`), [baseURL]);
 
     const wallets = [
         new PhantomWalletAdapter(),
@@ -30,16 +41,34 @@ function MyApp({ Component, pageProps }: AppProps) {
     ];
 
     return (
-        <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider wallets={wallets} autoConnect>
-                <WalletModalProvider>
-                    <GlobalProvider itemId="" paymentMethod="Wallet">
-                        <Component {...pageProps} />
-                    </GlobalProvider>
-                </WalletModalProvider>
-            </WalletProvider>
-        </ConnectionProvider>
+        <ThemeProvider>
+            <ConnectionProvider endpoint={endpoint}>
+                <WalletProvider wallets={wallets} autoConnect>
+                    <WalletModalProvider>
+                        <GlobalProvider
+                            itemId=""
+                            link={link}
+                            paymentMethod={paymentMethod.QRCode}
+                            storeAddress={storeAddress}
+                        >
+                            <Component {...pageProps} />
+                        </GlobalProvider>
+                    </WalletModalProvider>
+                </WalletProvider>
+            </ConnectionProvider>
+        </ThemeProvider>
     );
-}
+};
 
-export default MyApp;
+App.getInitialProps = async (appContext) => {
+    const props = await NextApp.getInitialProps(appContext);
+    const { req } = appContext.ctx;
+    const host = req?.headers.host || 'localhost:3000';
+
+    return {
+        ...props,
+        host,
+    };
+};
+
+export default App;
