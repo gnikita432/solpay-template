@@ -1,5 +1,5 @@
 import Product from '../client/components/Products'
-import { useState , useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import styles from '../client/styles/HomePage.module.css'
@@ -42,7 +42,7 @@ export default function HomePage() {
           <p className={styles.header}>🕸️ Solpay Comic Books Store 📖</p>
           <p className={styles.subText}>accepting sols for comic books!</p>
         </header>
-        <main> 
+        <main>
           {publicKey ? renderItemBuyContainer() : renderNotConnectedContainer()}
         </main>
       </div>
