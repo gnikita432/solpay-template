@@ -1,54 +1,63 @@
-.productContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    max-width: 320px;
-    height: 400px;
-    background-color: var(--LIGHT_BLACK);
-    margin: 15px;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid var(--LIGHT_GREY);
-  }
-  
-  .productImage{
-    width: 140px;
-    background-color: var(--LIGHT_BLACK);
-  }
-  
-  .productDetails{
-    display: flex;
-    flex-direction: column;
-    max-width: 95%;
-  }
-  
-  .productText{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  
-  .productTitle{
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 12px;
-  }
-  .productDescription{
-    color:var(--DARK_WHITE);
-  }
-  
-  .productAction{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .productPrice{
-    font-size: 1.3em;
-  }
+.productContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 320px;
+  height: 400px;
+  background-color: var(--LIGHT_BLACK);
+  margin: 15px;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--LIGHT_GREY);
+}
 
+.productImage {
+  width: 140px;
+  background-color: var(--LIGHT_BLACK);
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  max-width: 95%;
+}
+
+.productText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.productTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.productDescription {
+  color: var(--DARK_WHITE);
+}
+
+.productAction {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.productPrice {
+  font-size: 1.3em;
+}
+
+.buyButton {
+  border: none;
+  background-color: var(--PURPLE_DINO);
+  color: #fff;
+  font-size: 16px;
+  border-radius: 3px;
+  padding: 8px 45px;
+  cursor: pointer;
+}
