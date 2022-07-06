@@ -11,8 +11,7 @@ import BigNumber from "bignumber.js";
 import express , {Response , Request } from 'express';
 
 // Make sure you replace this with your wallet address!
-const sellerAddress = '2Tqvqs6KGhLBrZkPvNDQRc3T2Lz2kpEYktyWb8wdoRKV'
-const sellerPublicKey = new PublicKey(sellerAddress);
+const sellerPublicKey = new PublicKey(process.env.NEXT_PUBLIC_SELLER_WALLET_ADDRESS!);
 
 const createTransaction = async (req:Request, res:Response) => {
   try {

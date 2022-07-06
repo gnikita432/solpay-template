@@ -42,13 +42,11 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
 
         // We create a transaction object
         const tx = Transaction.from(Buffer.from(txData.transaction, 'base64'));
-        console.log('Tx data is', tx);
 
         // Attempt to send the transaction to the network
         try {
             // Send the transaction to the network
             const txHash = await sendTransaction(tx, connection);
-            console.log(`Transaction sent: https://solscan.io/tx/${txHash}?cluster=devnet`);
             //NIKITA : VALIDATE payment here , this is set to true assuming all payments passsed
             setPaid(true);
             togglePaymentState(false);
