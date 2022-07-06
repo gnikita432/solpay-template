@@ -19,7 +19,7 @@ interface IProp {
 const Product: FC<IProp> = ({ product }) => {
   const { id, name, price, description, image_url } = product;
   const { isShown, toggle } = useModal();
-  const [showPaid, setShowPaid] = useState(true);
+  const [showPaid, setShowPaid] = useState<boolean>(true);
 
   return (
     <div className={styles.productContainer}>
@@ -38,7 +38,7 @@ const Product: FC<IProp> = ({ product }) => {
           {/* I'm hardcoding these for now, we'll fetch the hash from the API later*/}
           {showPaid ? <div>
             <button onClick={toggle} className={styles.buyButton}>PAY</button>
-            <Modal isShown={isShown} hide={toggle} />
+            <Modal isShown={isShown} hide={toggle} togglePaymentState={setShowPaid} productId={id}/>
           </div> : <IPFSDownload filename="spiderman-comic.zip" hash="QmTAEowJmKNUiP6sBkJ7yFinX6ZCBfN9duwWtsmz89G9kR" />
           }
         </div>
