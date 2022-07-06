@@ -1,16 +1,16 @@
-import React, { useState, useMemo, FunctionComponent , Dispatch, SetStateAction} from 'react';
+import React, { useState, useMemo, FunctionComponent, Dispatch, SetStateAction } from 'react';
 import { Keypair, Transaction } from '@solana/web3.js';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Circles } from 'react-loader-spinner';
-import styles from "../styles/Product.module.css";
+import { Circles, ThreeDots } from 'react-loader-spinner';
+import styles from '../styles/Product.module.css';
 import IPFSDownload from './IpfsDownload';
 
 export interface BuyProps {
     itemID: number;
-    togglePaymentState :  ( val : boolean) => void;
+    togglePaymentState: (val: boolean) => void;
 }
 
-export const Buy: FunctionComponent<BuyProps> = ({ itemID , togglePaymentState}) => {
+export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState }) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
     const orderID = useMemo(() => Keypair.generate().publicKey, []); // Public key used to identify the order
@@ -68,7 +68,11 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID , togglePaymentState})
     }
 
     if (loading) {
-        return <Circles color="gray" />;
+        return (
+            <div className={styles.loadingDots}>
+                <ThreeDots color='#DC1FFF' height={80} width={80} />
+            </div>
+        );
     }
 
     return (
