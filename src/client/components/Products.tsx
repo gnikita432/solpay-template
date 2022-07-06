@@ -47,3 +47,4 @@ const Product: FC<IProp> = ({ product }) => {
   );
 }
 export default Product;
+

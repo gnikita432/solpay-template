@@ -87,3 +87,4 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
         </div>
     );
 };
+
