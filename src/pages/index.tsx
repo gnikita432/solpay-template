@@ -27,14 +27,16 @@ export default function HomePage() {
           <p className={styles.subText}>accepting sols for comic books!</p>
         </header>
         <main>
+          <div>
+            <WalletMultiButton
+              className={styles.ctaButton && styles.connectWalletButton}
+            />
+          </div>
           <div className={styles.productsContainer}>
             {products.map((product) => (
               <Product key={product.id} product={product} />
             ))}
           </div>
-          <WalletMultiButton
-            className={styles.ctaButton && styles.connectWalletButton}
-          />
         </main>
       </div>
     </div>

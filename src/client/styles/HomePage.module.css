@@ -62,6 +62,7 @@
 }
 
 .connectWalletButton {
+  margin-top: 25px;
   color: white;
   background: -webkit-linear-gradient(
     left,
