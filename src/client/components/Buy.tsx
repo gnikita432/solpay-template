@@ -1,9 +1,16 @@
-import React, { useState, useMemo, FunctionComponent, Dispatch, SetStateAction } from 'react';
+import React, { useState, useMemo, FunctionComponent, Dispatch, SetStateAction, useEffect } from 'react';
 import { Keypair, Transaction } from '@solana/web3.js';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { Circles, ThreeDots } from 'react-loader-spinner';
 import styles from '../styles/Product.module.css';
 import IPFSDownload from './IpfsDownload';
+import { findReference, FindReferenceError } from '@solana/pay';
+
+const STATUS = {
+    Initial: 'Initial',
+    Submitted: 'Submitted',
+    Paid: 'Paid',
+};
 
 export interface BuyProps {
     itemID: number;
@@ -15,8 +22,8 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
     const { publicKey, sendTransaction } = useWallet();
     const orderID = useMemo(() => Keypair.generate().publicKey, []); // Public key used to identify the order
 
-    const [paid, setPaid] = useState(false);
     const [loading, setLoading] = useState(false); // Loading state of all above
+    const [status, setStatus] = useState(STATUS.Initial); // Tracking transaction status
 
     // useMemo is a React hook that only computes the value if the dependencies change
     const order = useMemo(
@@ -47,15 +54,42 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
         try {
             // Send the transaction to the network
             const txHash = await sendTransaction(tx, connection);
-            //NIKITA : VALIDATE payment here , this is set to true assuming all payments passsed
-            setPaid(true);
-            togglePaymentState(false);
+            setStatus(STATUS.Submitted);
         } catch (error) {
             console.error(error);
         } finally {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        // Check if transaction was confirmed
+        if (status === STATUS.Submitted) {
+            setLoading(true);
+            const interval = setInterval(async () => {
+                try {
+                    const signatureInfo = await findReference(connection, orderID);
+
+                    togglePaymentState(false);
+                    clearInterval(interval);
+                    setStatus(STATUS.Paid);
+                    setLoading(false);
+                    alert('Thank you for your purchase!');
+                    console.log('They paid Sucessfully ');
+                } catch (e) {
+                    if (e instanceof FindReferenceError) {
+                        return null;
+                    }
+                    console.error('Unknown error', e);
+                } finally {
+                    setLoading(false);
+                }
+            }, 1000);
+            return () => {
+                clearInterval(interval);
+            };
+        }
+    }, [status]);
 
     if (!publicKey) {
         return (
@@ -68,14 +102,14 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
     if (loading) {
         return (
             <div className={styles.loadingDots}>
-                <ThreeDots color='#DC1FFF' height={80} width={80} />
+                <ThreeDots color="#DC1FFF" height={80} width={80} />
             </div>
         );
     }
 
     return (
         <div>
-            {paid ? (
+            {status === STATUS.Paid ? (
                 <IPFSDownload filename="spiderman-comic.zip" hash="QmTAEowJmKNUiP6sBkJ7yFinX6ZCBfN9duwWtsmz89G9kR" />
             ) : (
                 <button disabled={loading} className={styles.buyButton} onClick={processTransaction}>
@@ -85,4 +119,3 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
         </div>
     );
 };
-
