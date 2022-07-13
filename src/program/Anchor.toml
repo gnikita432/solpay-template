@@ -8,7 +8,7 @@ store = "Ai6qd7Z2TYALRkfG5NTyNd5hoUK2wUCBtJd8d5wZAvpJ"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "/Users/oliverke/.config/solana/id.json"
 
 [scripts]
