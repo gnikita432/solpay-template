@@ -10,31 +10,15 @@ export default function HomePage() {
 
   //Refetch products on wallet change
   useEffect(() => {
-    if (publicKey) {
-      fetch(`/api/fetchProducts`)
-        .then(response => response.json())
-        .then(data => {
-          setProducts(data);
-          console.log("Products", data);
-        });
-    }
+    fetch(`/api/fetchProducts`)
+      .then(response => response.json())
+      .then(data => {
+        setProducts(data);
+        console.log("Products", data);
+      });
   }, [publicKey]);
 
 
-  const renderNotConnectedContainer = () => (
-    <div className={styles.buttonContainer}>
-      <WalletMultiButton
-        className={styles.ctaButton && styles.connectWalletButton}
-      />
-    </div>
-  )
-  const renderItemBuyContainer = () => (
-    <div className={styles.productsContainer}>
-      {products.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
-    </div>
-  );
   return (
     <div className={styles.App}>
       <div className={styles.container}>
@@ -43,7 +27,16 @@ export default function HomePage() {
           <p className={styles.subText}>accepting sols for comic books!</p>
         </header>
         <main>
-          {publicKey ? renderItemBuyContainer() : renderNotConnectedContainer()}
+          <div>
+            <WalletMultiButton
+              className={styles.ctaButton && styles.connectWalletButton}
+            />
+          </div>
+          <div className={styles.productsContainer}>
+            {products.map((product) => (
+              <Product key={product.id} product={product} />
+            ))}
+          </div>
         </main>
       </div>
     </div>
