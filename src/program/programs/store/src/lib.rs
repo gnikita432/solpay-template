@@ -13,7 +13,7 @@ pub mod store {
     ) -> Result<()> {
         let customer = &mut ctx.accounts.customer;
         if name.as_bytes().len() > 200 {
-            panic!();
+            return Err(error!(StoreError::ExceedMaxLength));
         }
         customer.name = name;
         customer.comics = vec![item];
@@ -55,4 +55,10 @@ pub struct AddComic<'info> {
     pub user: Signer<'info>,
     #[account(mut, seeds = [b"user-stats", user.key().as_ref()], bump = customer.bump)]
     pub customer: Account<'info, Customers>,
+}
+
+#[error_code]
+pub enum StoreError {
+    #[msg("Name string exceed 200 characters")]
+    ExceedMaxLength,
 }
