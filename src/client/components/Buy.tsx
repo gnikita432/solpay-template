@@ -6,10 +6,10 @@ import styles from '../styles/Product.module.css';
 import IPFSDownload from './IpfsDownload';
 import { findReference, FindReferenceError } from '@solana/pay';
 
-const STATUS = {
-    Initial: 'Initial',
-    Submitted: 'Submitted',
-    Paid: 'Paid',
+enum  STATUS {
+    Initial = 'Initial',
+    Submitted = 'Submitted',
+    Paid = 'Paid',
 };
 
 export interface BuyProps {
@@ -54,9 +54,11 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
         try {
             // Send the transaction to the network
             const txHash = await sendTransaction(tx, connection);
+            // VALIDATE payment here , this is set to true assuming all payments passsed
             setStatus(STATUS.Submitted);
         } catch (error) {
             console.error(error);
+            alert('Error: Payment Unsuccessful');
         } finally {
             setLoading(false);
         }
