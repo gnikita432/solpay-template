@@ -43,6 +43,11 @@
   -webkit-text-fill-color: transparent;
 }
 
+.walletButton{
+  position: absolute;
+  right:20px;
+}
+
 .buttonContainer {
   display: flex;
   justify-content: center;

@@ -27,7 +27,7 @@ export default function HomePage() {
           <p className={styles.subText}>accepting sols for comic books!</p>
         </header>
         <main>
-          <div>
+          <div className={styles.walletButton}>
             <WalletMultiButton
               className={styles.ctaButton && styles.connectWalletButton}
             />
