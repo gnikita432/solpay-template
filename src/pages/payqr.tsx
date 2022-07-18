@@ -6,13 +6,19 @@ import { PoweredBy } from '../client/components/common/PoweredBy';
 import { Amount } from '../client/components/common/Amount';
 import { BackArrowButton } from '../client/components/button/BackArrowButton';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import css from './payqr.module.css';
 
 const PayQR: NextPage = () => {
-    const amount = new BigNumber('0.003');
-    const label = 'Spider Man Comic';
-    const message = 'Very nice collectables';
-    const { generate, url } = useQRPayment({ amount, label, message });
+    const router = useRouter();
+    let params = new URLSearchParams(document.location.search);
+    let price = params.get('price') || '0.00';
+    let memo = params.get('id') || '';
+    const label = params.get('name') || '';
+    const message = 'Great Collections of Comic';
+    const amount = new BigNumber(price);
+
+    const { generate, url } = useQRPayment({ amount, label, message, defaultMemo: memo });
 
     useEffect(() => {
         if (!url) generate();
@@ -21,7 +27,7 @@ const PayQR: NextPage = () => {
     return (
         <div className={css.root}>
             <div className={css.header}>
-                <BackArrowButton onClick={() => {}}>Cancel</BackArrowButton>
+                <BackArrowButton onClick={() => router.push('/')}>Cancel</BackArrowButton>
             </div>
             <div className={css.main}>
                 <div className={css.amount}>

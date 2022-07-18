@@ -12,13 +12,14 @@ export interface IUseQRCodePayment {
     amount: BigNumber;
     label?: string;
     message?: string;
+    defaultMemo?: string;
 }
 
-export const useQRPayment = ({ amount, label, message }: IUseQRCodePayment) => {
+export const useQRPayment = ({ amount, label, message, defaultMemo }: IUseQRCodePayment) => {
     const { connection } = useConnection();
     const { storeAddress, link, requiredConfirmations = 1 } = useGlobal();
     const router = useRouter();
-    const [memo, setMemo] = useState<string>();
+    const [memo, setMemo] = useState<string | undefined>(defaultMemo);
     const [reference, setReference] = useState<PublicKey>();
     const [signature, setSignature] = useState<TransactionSignature>();
     const [status, setStatus] = useState(PaymentStatus.New);
@@ -30,8 +31,6 @@ export const useQRPayment = ({ amount, label, message }: IUseQRCodePayment) => {
         const url = new URL(String(link));
         url.searchParams.append('recipient', recipient.toBase58());
         url.searchParams.append('amount', amount.toFixed(amount.decimalPlaces()));
-        if (amount) {
-        }
 
         if (reference) {
             url.searchParams.append('reference', reference.toBase58());
@@ -61,7 +60,6 @@ export const useQRPayment = ({ amount, label, message }: IUseQRCodePayment) => {
 
     const generate = useCallback(() => {
         if (status === PaymentStatus.New && !reference) {
-            console.log('Generate called');
             setReference(Keypair.generate().publicKey);
             setStatus(PaymentStatus.Pending);
             // router.push('/pending-qr');
