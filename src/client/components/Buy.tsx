@@ -77,7 +77,6 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
                     setStatus(STATUS.Paid);
                     setLoading(false);
                     alert('Thank you for your purchase!');
-                    console.log('They paid Sucessfully ');
                 } catch (e) {
                     if (e instanceof FindReferenceError) {
                         return null;
