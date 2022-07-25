@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import styles from '../styles/Product.module.css';
 import IPFSDownload from './IpfsDownload';
 import { Modal } from '../components/Modal';
 import { useModal } from '../components/useModal';
-import { useProgram } from '../hooks/useProgram';
+import Image from 'next/image';
 
 interface IProp {
     product: {
@@ -21,18 +21,11 @@ const Product: FC<IProp> = ({ product }) => {
     const { id, name, price, description, image_url } = product;
     const { isShown, toggle } = useModal();
     const [showPaid, setShowPaid] = useState<boolean>(true);
-    const { fetchCustomer } = useProgram();
-
-    useEffect(() => {
-        (async () => {
-            await fetchCustomer();
-        })();
-    }, []);
 
     return (
         <div className={styles.productContainer}>
             <div>
-                <img className={styles.productImage} src={image_url} alt={name} />
+                <Image height={200} width={160} className={styles.productImage} src={image_url} alt={name} />
             </div>
 
             <div className={styles.productDetails}>
@@ -49,7 +42,15 @@ const Product: FC<IProp> = ({ product }) => {
                             <button onClick={toggle} className={styles.buyButton}>
                                 PAY
                             </button>
-                            <Modal isShown={isShown} hide={toggle} togglePaymentState={setShowPaid} productId={id} />
+                            <Modal
+                                isShown={isShown}
+                                hide={toggle}
+                                togglePaymentState={setShowPaid}
+                                price={price}
+                                productId={id}
+                                name={name}
+                                description={description}
+                            />
                         </div>
                     ) : (
                         <IPFSDownload

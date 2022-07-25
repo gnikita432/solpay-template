@@ -14,6 +14,7 @@ export default function HomePage() {
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data);
+                console.log('Products', data);
             });
     }, [publicKey]);
 
@@ -25,7 +26,7 @@ export default function HomePage() {
                     <p className={styles.subText}>accepting sols for comic books!</p>
                 </header>
                 <main>
-                    <div>
+                    <div className={styles.walletButton}>
                         <WalletMultiButton className={styles.ctaButton && styles.connectWalletButton} />
                     </div>
                     <div className={styles.productsContainer}>
