@@ -77,5 +77,12 @@
         ]
       }
     }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ExceedMaxLength",
+      "msg": "Name string exceed 200 characters"
+    }
   ]
 }
