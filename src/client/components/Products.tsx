@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styles from '../styles/Product.module.css';
 import IPFSDownload from './IpfsDownload';
 import { Modal } from '../components/Modal';
@@ -27,7 +27,6 @@ const Product: FC<IProp> = ({ product }) => {
             <div>
                 <Image height={200} width={160} className={styles.productImage} src={image_url} alt={name} />
             </div>
-
             <div className={styles.productDetails}>
                 <div className={styles.productText}>
                     <div className={styles.productTitle}>{name}</div>

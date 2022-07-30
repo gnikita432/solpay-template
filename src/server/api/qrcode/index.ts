@@ -1,17 +1,17 @@
 import { createTransfer } from '@solana/pay';
-import { PublicKey, Transaction } from '@solana/web3.js';
+import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { NextApiHandler } from 'next';
 import { connection } from '../../core';
 import { cors, rateLimit } from '../../middleware';
-
+import { utils } from '@project-serum/anchor';
+import { newComic, newComicWithCustomer } from './serializer';
 interface GetResponse {
     label: string;
     icon: string;
 }
 
 const get: NextApiHandler<GetResponse> = async (request, response) => {
-    console.log('GET_REQUEST_CALLED');
     const label = request.query.label;
     if (!label) throw new Error('missing label');
     if (typeof label !== 'string') throw new Error('invalid label');
@@ -35,7 +35,6 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
     persisted along with an unpredictable opaque ID representing the payment, and the ID be passed to the app client,
     which will include the ID in the transaction request URL. This prevents tampering with the transaction request.
     */
-    console.log('POST_REQUEST CALLED');
     const recipientField = request.query.recipient;
     if (!recipientField) throw new Error('missing recipient');
     if (typeof recipientField !== 'string') throw new Error('invalid recipient');
@@ -78,6 +77,35 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
         memo,
     });
 
+    const STORE_PROGRAM_ID = new PublicKey('GXgYN645MbNjUCmLyCsS6jikssTz1sUt3pn2wf5DjmBF');
+    const [shopProgramPDA, _] = await PublicKey.findProgramAddress(
+        [utils.bytes.utf8.encode('user-stats'), account.toBuffer()],
+        STORE_PROGRAM_ID
+    );
+    const programPayload = await connection.getProgramAccounts(STORE_PROGRAM_ID);
+    const hasComics = programPayload.find((item) => item.pubkey.toString() === shopProgramPDA.toString());
+
+    const instructionBuff = hasComics ? newComic('fakeId') : newComicWithCustomer(account.toString(), 'fake-id');
+    const addComicInstruction = new TransactionInstruction({
+        programId: STORE_PROGRAM_ID,
+        keys: [
+            {
+                isWritable: false,
+                isSigner: true,
+                pubkey: account,
+            },
+            {
+                isWritable: true,
+                isSigner: false,
+                pubkey: shopProgramPDA,
+            },
+        ],
+        data: instructionBuff,
+    });
+
+    // add comic instruction
+    transaction.add(addComicInstruction);
+
     // Serialize and deserialize the transaction. This ensures consistent ordering of the account keys for signing.
     transaction = Transaction.from(
         transaction.serialize({
@@ -92,7 +120,6 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
         requireAllSignatures: false,
     });
     const base64 = serialized.toString('base64');
-    console.log('POST CALLED', base64);
     response.status(200).send({ transaction: base64, message });
 };
 

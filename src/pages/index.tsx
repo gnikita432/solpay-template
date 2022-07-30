@@ -3,10 +3,25 @@ import { useState, useEffect } from 'react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 import styles from '../client/styles/HomePage.module.css';
+import { useProgram } from '../client/hooks/useProgram';
 
 export default function HomePage() {
     const { publicKey } = useWallet();
     const [products, setProducts] = useState<any[]>([]);
+
+    const { fetchCustomer, customer, program, addComic, createCustomer } = useProgram();
+
+    useEffect(() => {
+        if (program) {
+            fetchCustomer();
+        }
+    }, [program]);
+
+    const handleAdd = () => {
+        createCustomer('Comic-1234');
+    };
+
+    console.log(customer);
 
     //Refetch products on wallet change
     useEffect(() => {
@@ -14,7 +29,6 @@ export default function HomePage() {
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data);
-                console.log('Products', data);
             });
     }, [publicKey]);
 
@@ -26,6 +40,9 @@ export default function HomePage() {
                     <p className={styles.subText}>accepting sols for comic books!</p>
                 </header>
                 <main>
+                    <button style={{ background: 'green', height: '100px', width: '200px' }} onClick={handleAdd}>
+                        Add a dummy comic
+                    </button>
                     <div className={styles.walletButton}>
                         <WalletMultiButton className={styles.ctaButton && styles.connectWalletButton} />
                     </div>

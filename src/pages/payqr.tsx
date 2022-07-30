@@ -21,8 +21,8 @@ const PayQR: NextPage = () => {
     const { generate, url } = useQRPayment({ amount, label, message, defaultMemo: memo });
 
     useEffect(() => {
-        if (!url) generate();
-    }, [generate, url]);
+        generate();
+    }, [generate]);
 
     return (
         <div className={css.root}>

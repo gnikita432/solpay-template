@@ -3,6 +3,7 @@ import * as anchor from '@project-serum/anchor';
 import { Program, AnchorProvider } from '@project-serum/anchor';
 import { useWallet, useAnchorWallet } from '@solana/wallet-adapter-react';
 import idl from '../../artifacts/idl.json';
+import { Store } from '../../artifacts/store-type';
 import { useEffect, useState } from 'react';
 import { CLUSTER_ENDPOINT } from '../utils/constants';
 
@@ -14,16 +15,16 @@ const programID = new PublicKey('GXgYN645MbNjUCmLyCsS6jikssTz1sUt3pn2wf5DjmBF');
 export const useProgram = () => {
     const { wallet, publicKey } = useWallet();
     const walletAnchor = useAnchorWallet();
-    const [program, setProgram] = useState<anchor.Program<any>>();
-
-    const init = async () => {
-        const provider = await getProvider();
-        const program = new Program(idl as any, programID, provider);
-        setProgram(program);
-        console.log('Program initialized');
-    };
+    const [customer, setCustomer] = useState<anchor.IdlTypes<Store>>();
+    const [program, setProgram] = useState<anchor.Program<Store>>();
 
     useEffect(() => {
+        const init = async () => {
+            const provider = await getProvider();
+            const program = new Program(idl as any, programID, provider);
+            setProgram(program);
+            console.log('Program initialized');
+        };
         if (wallet && publicKey) {
             init();
         }
@@ -39,7 +40,7 @@ export const useProgram = () => {
         return provider;
     }
 
-    const getProgramPDA = async (program: anchor.Program, publicKey: PublicKey) => {
+    const getProgramPDA = async (program: anchor.Program<Store>, publicKey: PublicKey) => {
         const [shopProgramPDA, _] = await PublicKey.findProgramAddress(
             [anchor.utils.bytes.utf8.encode('user-stats'), publicKey.toBuffer()],
             program.programId
@@ -81,7 +82,8 @@ export const useProgram = () => {
         if (program && publicKey) {
             try {
                 const PDA = await getProgramPDA(program, publicKey);
-                const customer = await program.account.customers.fetch(PDA);
+                const progCustomer = await program.account.customers.fetch(PDA);
+                setCustomer(progCustomer);
                 return customer;
             } catch (err) {
                 console.log('Error fetching customer', err);
@@ -89,5 +91,5 @@ export const useProgram = () => {
         }
     };
 
-    return { createCustomer, fetchCustomer, addComic, publicKey };
+    return { createCustomer, fetchCustomer, addComic, publicKey, customer, program };
 };
