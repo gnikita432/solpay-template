@@ -2,7 +2,7 @@ import { createTransfer } from '@solana/pay';
 import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { NextApiHandler } from 'next';
-import { connection } from '../../core';
+import { connection, PUBLIC_SHOP_PROGRAM_ID } from '../../core';
 import { cors, rateLimit } from '../../middleware';
 import { utils } from '@project-serum/anchor';
 import { newComic, newComicWithCustomer } from './serializer';
@@ -77,7 +77,7 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
         memo,
     });
 
-    const STORE_PROGRAM_ID = new PublicKey('GXgYN645MbNjUCmLyCsS6jikssTz1sUt3pn2wf5DjmBF');
+    const STORE_PROGRAM_ID = new PublicKey(PUBLIC_SHOP_PROGRAM_ID);
     const [shopProgramPDA, _] = await PublicKey.findProgramAddress(
         [utils.bytes.utf8.encode('user-stats'), account.toBuffer()],
         STORE_PROGRAM_ID

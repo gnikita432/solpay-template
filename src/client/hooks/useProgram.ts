@@ -5,12 +5,12 @@ import { useWallet, useAnchorWallet } from '@solana/wallet-adapter-react';
 import idl from '../../artifacts/idl.json';
 import { Store } from '../../artifacts/store-type';
 import { useEffect, useState } from 'react';
-import { CLUSTER_ENDPOINT } from '../utils/constants';
+import { CLUSTER_ENDPOINT, SHOP_PROGRAM_ID } from '../utils/constants';
 
 const opts = {
     preflightCommitment: 'processed',
 };
-const programID = new PublicKey('GXgYN645MbNjUCmLyCsS6jikssTz1sUt3pn2wf5DjmBF');
+const programID = new PublicKey(SHOP_PROGRAM_ID);
 
 export const useProgram = () => {
     const { wallet, publicKey } = useWallet();

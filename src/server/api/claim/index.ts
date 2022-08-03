@@ -1,7 +1,7 @@
 import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
 import { NextApiHandler } from 'next';
 import { cors, rateLimit } from '../../middleware';
-import { connection } from '../../core';
+import { connection, MEMO_PROGRAM_ID } from '../../core';
 
 interface GetResponse {
     label: string;
@@ -46,9 +46,9 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
 
     // Store pubkey in Solana memo program
     let transaction = new Transaction();
-    const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
+    const PROGRAM_ID = new PublicKey(MEMO_PROGRAM_ID);
     const instruction = new TransactionInstruction({
-        programId: MEMO_PROGRAM_ID,
+        programId: PROGRAM_ID,
         keys: [{ pubkey: reference, isWritable: false, isSigner: false }],
         data: Buffer.from(accountField, 'utf8'),
     });

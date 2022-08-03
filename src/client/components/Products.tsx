@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import styles from '../styles/Product.module.css';
 import IPFSDownload from './IpfsDownload';
 import { Modal } from '../components/Modal';
