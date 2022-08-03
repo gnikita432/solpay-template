@@ -27,7 +27,6 @@ const Product: FC<IProp> = ({ product }) => {
             <div>
                 <Image height={200} width={160} className={styles.productImage} src={image_url} alt={name} />
             </div>
-
             <div className={styles.productDetails}>
                 <div className={styles.productText}>
                     <div className={styles.productTitle}>{name}</div>

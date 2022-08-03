@@ -62,7 +62,6 @@ export const useQRPayment = ({ amount, label, message, defaultMemo }: IUseQRCode
         if (status === PaymentStatus.New && !reference) {
             setReference(Keypair.generate().publicKey);
             setStatus(PaymentStatus.Pending);
-            // router.push('/pending-qr');
         }
     }, [status, reference]);
 
