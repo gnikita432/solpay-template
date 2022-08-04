@@ -15,7 +15,7 @@ const programID = new PublicKey(SHOP_PROGRAM_ID);
 export const useProgram = () => {
     const { wallet, publicKey } = useWallet();
     const walletAnchor = useAnchorWallet();
-    const [customer, setCustomer] = useState<anchor.IdlTypes<Store>>();
+    const [userComics, setUserComics] = useState<string[]>([]);
     const [program, setProgram] = useState<anchor.Program<Store>>();
 
     useEffect(() => {
@@ -66,6 +66,7 @@ export const useProgram = () => {
     };
 
     const addComic = async (comic: string) => {
+        // add comic will automatically be done for QR payments
         if (program && publicKey) {
             const PDA = await getProgramPDA(program, publicKey);
             await program.methods
@@ -83,13 +84,13 @@ export const useProgram = () => {
             try {
                 const PDA = await getProgramPDA(program, publicKey);
                 const progCustomer = await program.account.customers.fetch(PDA);
-                setCustomer(progCustomer);
-                return customer;
+                setUserComics(progCustomer.comics || []);
+                return progCustomer.comics;
             } catch (err) {
                 console.log('Error fetching customer', err);
             }
         }
     };
 
-    return { createCustomer, fetchCustomer, addComic, publicKey, customer, program };
+    return { createCustomer, fetchCustomer, addComic, publicKey, userComics, program };
 };
