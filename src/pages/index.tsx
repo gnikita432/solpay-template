@@ -1,22 +1,23 @@
 import Product from '../client/components/Products';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 import styles from '../client/styles/HomePage.module.css';
 import { useProgram } from '../client/hooks/useProgram';
+import { ClaimModal } from '../client/components/ClaimModal';
 
 export default function HomePage() {
     const { publicKey } = useWallet();
     const [products, setProducts] = useState<any[]>([]);
-
-    const { fetchCustomer, customer, program } = useProgram();
+    const { fetchCustomer, userComics, program } = useProgram();
+    const [showClaimModal, setShowClaimModal] = useState<boolean>(false);
 
     useEffect(() => {
         if (program) {
             fetchCustomer();
         }
     }, [program]);
-
+    console.log(userComics);
     //Refetch products on wallet change
     useEffect(() => {
         fetch(`/api/fetchProducts`)
@@ -28,22 +29,28 @@ export default function HomePage() {
 
     return (
         <div className={styles.App}>
-            <div className={styles.walletButton}>
-                <WalletMultiButton className={styles.ctaButton && styles.connectWalletButton} />
-            </div>
-            <div className={styles.container}>
-                <header className={styles.headerContainer}>
-                    <p className={styles.header}>🕸️ Solpay Comic Books Store 📖</p>
-                    <p className={styles.subText}>accepting sols for comic books!</p>
-                </header>
-                <main>
-                    <div className={styles.productsContainer}>
-                        {products.map((product) => (
-                            <Product key={product.id} product={product} />
-                        ))}
-                    </div>
-                </main>
-            </div>
+            {showClaimModal && <ClaimModal hide={() => setShowClaimModal(false)} isShown={showClaimModal} />}
+            <header className={styles.header}>
+                <div className="ph-app-logo">
+                    <span>S🕸️lpay Comics</span>
+                </div>
+                <div className={styles.appButtons}>
+                    <WalletMultiButton className={styles.connectWalletButton} />
+                    <button className={styles.claimButton} onClick={() => setShowClaimModal(true)}>
+                        Claim
+                    </button>
+                </div>
+            </header>
+            <main className={styles.container}>
+                <div className={styles.productsContainer}>
+                    {products.map((product) => (
+                        <Product paid={userComics.includes(product.id)} key={product.id} product={product} />
+                    ))}
+                </div>
+            </main>
+            <footer className={styles.appFooter}>
+                <p>Accepting sols/usdc for comic books!</p>
+            </footer>
         </div>
     );
 }

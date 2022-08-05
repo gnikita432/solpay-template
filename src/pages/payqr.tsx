@@ -15,10 +15,11 @@ const PayQR: NextPage = () => {
     let price = params.get('price') || '0.00';
     let memo = params.get('id') || '';
     const label = params.get('name') || '';
+    const comicId = params.get('id') || '';
     const message = 'Great Collections of Comic';
     const amount = new BigNumber(price);
 
-    const { generate, url } = useQRPayment({ amount, label, message, defaultMemo: memo });
+    const { generate, url } = useQRPayment({ amount, label, message, defaultMemo: memo, comicId });
 
     useEffect(() => {
         generate();

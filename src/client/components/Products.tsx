@@ -15,9 +15,10 @@ interface IProp {
         filename: string;
         hash: string;
     };
+    paid: boolean;
 }
 
-const Product: FC<IProp> = ({ product }) => {
+const Product: FC<IProp> = ({ product, paid }) => {
     const { id, name, price, description, image_url } = product;
     const { isShown, toggle } = useModal();
     const [showPaid, setShowPaid] = useState<boolean>(true);
@@ -36,7 +37,7 @@ const Product: FC<IProp> = ({ product }) => {
                 <div className={styles.productAction}>
                     <div className={styles.productPrice}>{price} USDC</div>
                     {/* I'm hardcoding these for now, we'll fetch the hash from the API later*/}
-                    {showPaid ? (
+                    {!paid ? (
                         <div>
                             <button onClick={toggle} className={styles.buyButton}>
                                 PAY
@@ -52,10 +53,7 @@ const Product: FC<IProp> = ({ product }) => {
                             />
                         </div>
                     ) : (
-                        <IPFSDownload
-                            filename="spiderman-comic.zip"
-                            hash="QmTAEowJmKNUiP6sBkJ7yFinX6ZCBfN9duwWtsmz89G9kR"
-                        />
+                        <IPFSDownload filename={product.filename} hash={product.hash} />
                     )}
                 </div>
             </div>

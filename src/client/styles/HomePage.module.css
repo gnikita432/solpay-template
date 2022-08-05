@@ -1,16 +1,36 @@
 .App {
-  height: 100vh;
+  min-height: 100vh;
   background-color: rgb(20, 20, 20);
-  text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
+  padding: 0 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+}
+
+.header span {
+  font-size: 30px;
+}
+
+.claimButton {
+  background: #000;
+  font-size: 14px;
+  height: 50px;
+  padding: 0;
+  margin-left: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .container {
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 30px 0 30px;
+  padding: 0 20px;
   color: white;
   position: relative;
 }
@@ -28,8 +48,11 @@
   font-weight: bold;
 }
 
-.subText {
-  font-size: 25px;
+
+.appButtons {
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 
 .gradientText {
@@ -41,12 +64,16 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding: 0;
+  margin: 0;
 }
 
 .walletButton{
   position: absolute;
   right:20px;
+  height: auto;
 }
+
 
 .buttonContainer {
   display: flex;
@@ -54,17 +81,7 @@
   align-items: center;
   margin-top: 20px;
 }
-.ctaButton {
-  height: 45px;
-  border: 0;
-  width: auto;
-  padding-left: 40px;
-  padding-right: 40px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-}
+
 
 .connectWalletButton {
   color: white;
@@ -74,12 +91,8 @@
     var(--OCEAN_BLUE),
     var(--SURGE_GREEN)
   );
-  background-size: 200% 200%;
+  height: 50px;
   animation: gradient-animation 10s ease infinite;
-  max-width: 300px;
-  margin-top: 25px;
-  margin-right: 0;
-  margin-left: auto;
 }
 
 .mintButton {
@@ -198,4 +211,17 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+
+.appFooter {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #000;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  padding: 1rem 0;
 }

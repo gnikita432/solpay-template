@@ -1,5 +1,5 @@
 import { encodeURL, findReference, FindReferenceError, validateTransfer, ValidateTransferError } from '@solana/pay';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { useConnection } from '@solana/wallet-adapter-react';
 import { ConfirmedSignatureInfo, Keypair, PublicKey, TransactionSignature } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -10,12 +10,13 @@ import { Confirmations } from '../types';
 
 export interface IUseQRCodePayment {
     amount: BigNumber;
+    comicId: string;
     label?: string;
     message?: string;
     defaultMemo?: string;
 }
 
-export const useQRPayment = ({ amount, label, message, defaultMemo }: IUseQRCodePayment) => {
+export const useQRPayment = ({ amount, label, message, defaultMemo, comicId }: IUseQRCodePayment) => {
     const { connection } = useConnection();
     const { storeAddress, link, requiredConfirmations = 1 } = useGlobal();
     const router = useRouter();
@@ -31,6 +32,7 @@ export const useQRPayment = ({ amount, label, message, defaultMemo }: IUseQRCode
         const url = new URL(String(link));
         url.searchParams.append('recipient', recipient.toBase58());
         url.searchParams.append('amount', amount.toFixed(amount.decimalPlaces()));
+        url.searchParams.append('comicId', comicId);
 
         if (reference) {
             url.searchParams.append('reference', reference.toBase58());
