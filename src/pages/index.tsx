@@ -34,11 +34,14 @@ export default function HomePage() {
                 <div className="ph-app-logo">
                     <span>S🕸️lpay Comics</span>
                 </div>
+
                 <div className={styles.appButtons}>
                     <WalletMultiButton className={styles.connectWalletButton} />
-                    <button className={styles.claimButton} onClick={() => setShowClaimModal(true)}>
-                        Claim
-                    </button>
+                    {!publicKey && (
+                        <button className={styles.claimButton} onClick={() => setShowClaimModal(true)}>
+                            CLAIM
+                        </button>
+                    )}
                 </div>
             </header>
             <main className={styles.container}>

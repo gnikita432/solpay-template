@@ -1,6 +1,8 @@
-import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from '../styles/Modal.module.css';
+import { useQRPayment } from '../hooks/useQRClaim';
+import { QRCode } from './common/QRCode';
 
 export interface ClaimModalProps {
     isShown: boolean;
@@ -8,6 +10,12 @@ export interface ClaimModalProps {
 }
 
 export const ClaimModal: FunctionComponent<ClaimModalProps> = ({ isShown, hide }) => {
+    const { generate, url } = useQRPayment();
+
+    useEffect(() => {
+        generate();
+    }, [generate]);
+
     const modal = (
         <>
             <div className={styles.backdrop}></div>
@@ -20,7 +28,7 @@ export const ClaimModal: FunctionComponent<ClaimModalProps> = ({ isShown, hide }
                         </button>
                     </div>
                     <div>
-                        <h1>Claim QR code will show here</h1>
+                        <QRCode url={url} />
                     </div>
                 </div>
             </div>
