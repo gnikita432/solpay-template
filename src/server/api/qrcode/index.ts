@@ -2,10 +2,9 @@ import { createTransfer } from '@solana/pay';
 import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { NextApiHandler } from 'next';
-import { connection, PUBLIC_SHOP_PROGRAM_ID } from '../../core';
+import { connection, PUBLIC_SHOP_PROGRAM_ID, newComic, newComicWithCustomer } from '../../core';
 import { cors, rateLimit } from '../../middleware';
 import { utils } from '@project-serum/anchor';
-import { newComic, newComicWithCustomer } from './serializer';
 interface GetResponse {
     label: string;
     icon: string;

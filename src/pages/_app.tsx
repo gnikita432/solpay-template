@@ -10,6 +10,7 @@ import {
     SolflareWalletAdapter,
     TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
+import { QR_PAYMENT_URL } from '../client/utils/constants';
 import { clusterApiUrl } from '@solana/web3.js';
 import { AppInitialProps } from 'next/dist/shared/lib/utils';
 import { GlobalProvider } from '../client/components/context/GlobalProvider';
@@ -30,7 +31,7 @@ const App: FC<CustomAppProps> & { getInitialProps(appContext: AppContext): Promi
     const network = WalletAdapterNetwork.Devnet;
     const storeAddress = process.env.NEXT_PUBLIC_STORE_ADDRESS || '';
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-    const link = useMemo(() => new URL(`${baseURL}/api/qrcode/`), [baseURL]);
+    const link = useMemo(() => new URL(`${baseURL}${QR_PAYMENT_URL}/`), [baseURL]);
 
     const wallets = [
         new PhantomWalletAdapter(),
