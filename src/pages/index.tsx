@@ -1,10 +1,11 @@
 import Product from '../client/components/Products';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 import styles from '../client/styles/HomePage.module.css';
 import { useProgram } from '../client/hooks/useProgram';
 import { ClaimModal } from '../client/components/ClaimModal';
+import { GET_PRODUCTS_URL } from '../client/utils/constants';
 
 export default function HomePage() {
     const { publicKey } = useWallet();
@@ -20,7 +21,7 @@ export default function HomePage() {
     console.log(userComics);
     //Refetch products on wallet change
     useEffect(() => {
-        fetch(`/api/fetchProducts`)
+        fetch(GET_PRODUCTS_URL)
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data);

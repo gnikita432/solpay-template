@@ -1,16 +1,17 @@
 import React, { useState, useMemo, FunctionComponent, Dispatch, SetStateAction, useEffect } from 'react';
 import { Keypair, Transaction } from '@solana/web3.js';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Circles, ThreeDots } from 'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 import styles from '../styles/Product.module.css';
+import { WALLET_PAYMENT_URL } from '../utils/constants';
 import IPFSDownload from './IpfsDownload';
 import { findReference, FindReferenceError } from '@solana/pay';
 
-enum  STATUS {
+enum STATUS {
     Initial = 'Initial',
     Submitted = 'Submitted',
     Paid = 'Paid',
-};
+}
 
 export interface BuyProps {
     itemID: number;
@@ -38,7 +39,7 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
     // Fetch the transaction object from the server
     const processTransaction = async () => {
         setLoading(true);
-        const txResponse = await fetch('../api/createTransaction', {
+        const txResponse = await fetch(WALLET_PAYMENT_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
