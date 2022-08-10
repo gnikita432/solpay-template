@@ -1,10 +1,10 @@
 import { createTransfer } from '@solana/pay';
-import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { PublicKey, Transaction } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { NextApiHandler } from 'next';
-import { connection, PUBLIC_SHOP_PROGRAM_ID, newComic, newComicWithCustomer } from '../../core';
+import { connection } from '../../core';
 import { cors, rateLimit } from '../../middleware';
-import { utils } from '@project-serum/anchor';
+import { createAddInstruction } from '../../core/program';
 interface GetResponse {
     label: string;
     icon: string;
@@ -38,6 +38,10 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
     if (!recipientField) throw new Error('missing recipient');
     if (typeof recipientField !== 'string') throw new Error('invalid recipient');
     const recipient = new PublicKey(recipientField);
+
+    const itemID = request.query.itemID;
+    if (!itemID) throw new Error('missing itemID');
+    if (typeof itemID !== 'string') throw new Error('invalid item id');
 
     const amountField = request.query.amount;
     if (!amountField) throw new Error('missing amount');
@@ -76,33 +80,8 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
         memo,
     });
 
-    const STORE_PROGRAM_ID = new PublicKey(PUBLIC_SHOP_PROGRAM_ID);
-    const [shopProgramPDA, _] = await PublicKey.findProgramAddress(
-        [utils.bytes.utf8.encode('user-stats'), account.toBuffer()],
-        STORE_PROGRAM_ID
-    );
-    const programPayload = await connection.getProgramAccounts(STORE_PROGRAM_ID);
-    const hasComics = programPayload.find((item) => item.pubkey.toString() === shopProgramPDA.toString());
-
-    const instructionBuff = hasComics ? newComic('fakeId') : newComicWithCustomer(account.toString(), 'fake-id');
-    const addComicInstruction = new TransactionInstruction({
-        programId: STORE_PROGRAM_ID,
-        keys: [
-            {
-                isWritable: false,
-                isSigner: true,
-                pubkey: account,
-            },
-            {
-                isWritable: true,
-                isSigner: false,
-                pubkey: shopProgramPDA,
-            },
-        ],
-        data: instructionBuff,
-    });
-
     // add comic instruction
+    const addComicInstruction = await createAddInstruction(account, itemID);
     transaction.add(addComicInstruction);
 
     // Serialize and deserialize the transaction. This ensures consistent ordering of the account keys for signing.

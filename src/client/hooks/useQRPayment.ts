@@ -32,7 +32,7 @@ export const useQRPayment = ({ amount, label, message, defaultMemo, comicId }: I
         const url = new URL(String(link));
         url.searchParams.append('recipient', recipient.toBase58());
         url.searchParams.append('amount', amount.toFixed(amount.decimalPlaces()));
-        url.searchParams.append('comicId', comicId);
+        url.searchParams.append('itemID', comicId);
 
         if (reference) {
             url.searchParams.append('reference', reference.toBase58());

@@ -8,6 +8,7 @@ export interface ConfigProviderProps {
     paymentMethod: paymentMethod;
     storeAddress: string;
     link: URL;
+    claimLink: URL;
     requiredConfirmations?: Confirmations;
     minDecimals?: Digits;
 }
@@ -22,6 +23,7 @@ export const GlobalProvider: FC<ConfigProviderProps> = ({
     link,
     requiredConfirmations = 1,
     minDecimals = 0,
+    claimLink,
 }) => {
     return (
         <GlobalContext.Provider
@@ -33,6 +35,7 @@ export const GlobalProvider: FC<ConfigProviderProps> = ({
                 link,
                 requiredConfirmations,
                 minDecimals,
+                claimLink,
             }}
         >
             {children}
