@@ -96,7 +96,7 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
     if (!publicKey) {
         return (
             <div>
-                <p>You need to connect your wallet to make transactions</p>
+                <p className={styles.content}>You need to connect your wallet to make transactions</p>
             </div>
         );
     }

@@ -27,6 +27,13 @@
   padding: 2rem;
 }
 
+.modalcontent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .header {
   border-radius: 8px 8px;
   display: flex;

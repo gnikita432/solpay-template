@@ -37,6 +37,7 @@
   font-weight: bold;
   margin-bottom: 12px;
 }
+
 .productDescription {
   color: var(--DARK_WHITE);
 }
@@ -68,4 +69,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+
+.content {
+  text-align: center;
 }
