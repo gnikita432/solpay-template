@@ -25,6 +25,7 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
 
     const [loading, setLoading] = useState(false); // Loading state of all above
     const [status, setStatus] = useState(STATUS.Initial); // Tracking transaction status
+    const [paid, setPaid] = useState(false);
 
     // useMemo is a React hook that only computes the value if the dependencies change
     const order = useMemo(
@@ -76,8 +77,8 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
                     togglePaymentState(false);
                     clearInterval(interval);
                     setStatus(STATUS.Paid);
+                    setPaid(true);
                     setLoading(false);
-                    alert('Thank you for your purchase!');
                 } catch (e) {
                     if (e instanceof FindReferenceError) {
                         return null;
@@ -92,6 +93,12 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
             };
         }
     }, [status]);
+
+    useEffect(() => {
+        if (paid) {
+            alert('Thank you for your purchase!');
+        }
+    }, [paid]);
 
     if (!publicKey) {
         return (
