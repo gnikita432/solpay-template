@@ -56,11 +56,9 @@
 }
 
 .gradientText {
-  background: -webkit-linear-gradient(
-    left,
-    var(--SURGE_GREEN) 30%,
-    var(--OCEAN_BLUE) 60%
-  );
+  background: -webkit-linear-gradient(left,
+      var(--SURGE_GREEN) 30%,
+      var(--OCEAN_BLUE) 60%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -68,9 +66,9 @@
   margin: 0;
 }
 
-.walletButton{
+.walletButton {
   position: absolute;
-  right:20px;
+  right: 20px;
   height: auto;
 }
 
@@ -85,22 +83,18 @@
 
 .connectWalletButton {
   color: white;
-  background: -webkit-linear-gradient(
-    left,
-    var(--PURPLE_DINO),
-    var(--OCEAN_BLUE),
-    var(--SURGE_GREEN)
-  );
+  background: -webkit-linear-gradient(left,
+      var(--PURPLE_DINO),
+      var(--OCEAN_BLUE),
+      var(--SURGE_GREEN));
   height: 50px;
   animation: gradient-animation 10s ease infinite;
 }
 
 .mintButton {
-  background: -webkit-linear-gradient(
-    left,
-    var(--PURPLE_DINO),
-    var(--OCEAN_BLUE)
-  );
+  background: -webkit-linear-gradient(left,
+      var(--PURPLE_DINO),
+      var(--OCEAN_BLUE));
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
   margin-left: 10px;
@@ -178,36 +172,45 @@
   align-items: center;
   margin-top: 20px;
 }
+
 /* KeyFrames */
 @-webkit-keyframes gradient-animation {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
+
 @-moz-keyframes gradient-animation {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
+
 @keyframes gradient-animation {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -224,4 +227,9 @@
   text-align: center;
   font-size: 14px;
   padding: 1rem 0;
+}
+
+.content {
+  text-align: center;
+  margin: 10px;
 }

@@ -1,26 +1,28 @@
-import React  from 'react';
+import React from 'react';
 import useIPFS from '../hooks/useIPFS';
-import styles from "../styles/HomePage.module.css"
+import styles from '../styles/HomePage.module.css';
+
 type Props = {
-  hash: string,
-  filename: string,
-}
+    hash: string;
+    filename: string;
+};
 
 const IPFSDownload = ({ hash, filename }: Props) => {
+    const file = useIPFS(hash, filename);
 
-  const file = useIPFS(hash, filename);
-
-  return (
-    <div>
-      {file ? (
+    return (
         <div>
-          <a className={styles.downloadButton} href={file} download={filename}>Download</a>
+            {file ? (
+                <div className={styles.content}>
+                    <a className={styles.downloadButton} href={file} download={filename}>
+                        Download
+                    </a>
+                </div>
+            ) : (
+                <p>Downloading file...</p>
+            )}
         </div>
-      ) : (
-        <p>Downloading file...</p>
-      )}
-    </div>
-  );
+    );
 };
 
 export default IPFSDownload;

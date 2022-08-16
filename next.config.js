@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ['cdn.asaha.com'],
   },
+  typescript: {
+    ignoreBuildErrors: true
+  }
 }
 
 module.exports = nextConfig
