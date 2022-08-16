@@ -4,6 +4,7 @@ import IPFSDownload from './IpfsDownload';
 import { Modal } from '../components/Modal';
 import { useModal } from '../components/useModal';
 import Image from 'next/image';
+import { publicKey } from '@project-serum/anchor/dist/cjs/utils';
 
 interface IProp {
     product: {
@@ -37,7 +38,23 @@ const Product: FC<IProp> = ({ product, paid }) => {
                 <div className={styles.productAction}>
                     <div className={styles.productPrice}>{price} USDC</div>
                     {/* I'm hardcoding these for now, we'll fetch the hash from the API later*/}
+
                     {!paid ? (
+                        <div>
+                            <button onClick={toggle} className={styles.buyButton}>
+                                PAY
+                            </button>
+                            <Modal
+                                isShown={isShown}
+                                hide={toggle}
+                                togglePaymentState={setShowPaid}
+                                price={price}
+                                productId={id}
+                                name={name}
+                                description={description}
+                            />
+                        </div>
+                    ) : !publicKey ? (
                         <div>
                             <button onClick={toggle} className={styles.buyButton}>
                                 PAY
