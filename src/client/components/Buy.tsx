@@ -29,7 +29,7 @@ export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState })
     // useMemo is a React hook that only computes the value if the dependencies change
     const order = useMemo(
         () => ({
-            buyer: publicKey ? publicKey.toString() : 'noBuyer',
+            buyer: publicKey ? publicKey.toBase58() : 'noBuyer',
             orderID: orderID.toString(),
             itemID: itemID,
         }),
