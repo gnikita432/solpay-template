@@ -9,6 +9,7 @@ interface GlobalContextState {
     link: URL;
     requiredConfirmations?: Confirmations;
     minDecimals?: Digits;
+    claimLink: URL;
 }
 export function useGlobal(): GlobalContextState {
     return useContext(GlobalContext);

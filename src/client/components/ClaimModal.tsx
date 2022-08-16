@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from '../styles/Modal.module.css';
-import { useQRPayment } from '../hooks/useQRClaim';
+import { useQRClaim } from '../hooks/useQRClaim';
 import { QRCode } from './common/QRCode';
 
 export interface ClaimModalProps {
@@ -10,7 +10,7 @@ export interface ClaimModalProps {
 }
 
 export const ClaimModal: FunctionComponent<ClaimModalProps> = ({ isShown, hide }) => {
-    const { generate, url } = useQRPayment();
+    const { generate, url } = useQRClaim();
 
     useEffect(() => {
         generate();

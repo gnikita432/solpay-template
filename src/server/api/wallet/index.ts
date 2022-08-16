@@ -1,17 +1,10 @@
-import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { PublicKey, Transaction } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { NextApiHandler } from 'next';
 import { createTransferCheckedInstruction, getAssociatedTokenAddress, getMint } from '@solana/spl-token';
 import { cors, rateLimit } from '../../middleware';
-import { utils } from '@project-serum/anchor';
-import {
-    SHOP_ADDRESS,
-    SHOP_USDC_ADDRESS,
-    connection,
-    PUBLIC_SHOP_PROGRAM_ID,
-    newComic,
-    newComicWithCustomer,
-} from '../../core';
+import { SHOP_ADDRESS, SHOP_USDC_ADDRESS, connection, PUBLIC_SHOP_PROGRAM_ID, CLUSTER_ENDPOINT } from '../../core';
+import { createAddInstruction } from '../../core/program';
 
 // Make sure you replace this with your wallet address!
 const sellerPublicKey = new PublicKey(SHOP_ADDRESS);
@@ -70,33 +63,9 @@ const post: NextApiHandler<PostResponse> = async (req, res) => {
     });
     transaction.add(transferInstruction);
 
-    // const STORE_PROGRAM_ID = new PublicKey(PUBLIC_SHOP_PROGRAM_ID);
-    // const [shopProgramPDA, _] = await PublicKey.findProgramAddress(
-    //     [utils.bytes.utf8.encode('user-stats'), buyerPublicKey.toBuffer()],
-    //     STORE_PROGRAM_ID
-    // );
-    // const programPayload = await connection.getProgramAccounts(STORE_PROGRAM_ID);
-    // const hasComics = programPayload.find((item) => item.pubkey.toString() === shopProgramPDA.toString());
-
-    // const instructionBuff = hasComics ? newComic(orderID) : newComicWithCustomer(buyerPublicKey.toString(), orderID);
-    // const addComicInstruction = new TransactionInstruction({
-    //     programId: STORE_PROGRAM_ID,
-    //     keys: [
-    //         {
-    //             isWritable: false,
-    //             isSigner: true,
-    //             pubkey: buyerPublicKey,
-    //         },
-    //         {
-    //             isWritable: true,
-    //             isSigner: false,
-    //             pubkey: shopProgramPDA,
-    //         },
-    //     ],
-    //     data: instructionBuff,
-    // });
-
-    // transaction.add(addComicInstruction);
+    // program interaction with anchor
+    const addComicInstruction = await createAddInstruction(buyerPublicKey, itemID);
+    transaction.add(addComicInstruction);
 
     // Formatting our transaction
     const serializedTransaction = transaction.serialize({

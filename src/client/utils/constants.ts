@@ -6,3 +6,4 @@ export const SHOP_PROGRAM_ID = process.env.NEXT_PUBLIC_SHOP_PROGRAM_ID || '';
 export const GET_PRODUCTS_URL = '/api/products';
 export const WALLET_PAYMENT_URL = '/api/wallet';
 export const QR_PAYMENT_URL = '/api/qrcode';
+export const QR_CLAIM_URL = '/api/claim';

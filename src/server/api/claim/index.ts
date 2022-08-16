@@ -9,14 +9,10 @@ interface GetResponse {
 }
 
 const get: NextApiHandler<GetResponse> = async (request, response) => {
-    const label = request.query.label;
-    if (!label) throw new Error('missing label');
-    if (typeof label !== 'string') throw new Error('invalid label');
-
     const icon = `https://${request.headers.host}/solana-pay-logo.svg`;
 
     response.status(200).send({
-        label,
+        label: 'Claim Comics',
         icon,
     });
 };
@@ -49,7 +45,10 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
     const PROGRAM_ID = new PublicKey(MEMO_PROGRAM_ID);
     const instruction = new TransactionInstruction({
         programId: PROGRAM_ID,
-        keys: [{ pubkey: reference, isWritable: false, isSigner: false }],
+        keys: [
+            { pubkey: reference, isWritable: false, isSigner: false },
+            { pubkey: account, isWritable: false, isSigner: true },
+        ],
         data: Buffer.from(accountField, 'utf8'),
     });
 

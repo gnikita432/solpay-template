@@ -20,7 +20,7 @@ export interface BuyProps {
 
 export const Buy: FunctionComponent<BuyProps> = ({ itemID, togglePaymentState }) => {
     const { connection } = useConnection();
-    const { publicKey, sendTransaction } = useWallet();
+    const { publicKey, sendTransaction, signTransaction } = useWallet();
     const orderID = useMemo(() => Keypair.generate().publicKey, []); // Public key used to identify the order
 
     const [loading, setLoading] = useState(false); // Loading state of all above
