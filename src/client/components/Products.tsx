@@ -4,7 +4,7 @@ import IPFSDownload from './IpfsDownload';
 import { Modal } from '../components/Modal';
 import { useModal } from '../components/useModal';
 import Image from 'next/image';
-import { publicKey } from '@project-serum/anchor/dist/cjs/utils';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 interface IProp {
     product: {
@@ -23,7 +23,8 @@ const Product: FC<IProp> = ({ product, paid }) => {
     const { id, name, price, description, image_url } = product;
     const { isShown, toggle } = useModal();
     const [showPaid, setShowPaid] = useState<boolean>(true);
-
+    const { publicKey} = useWallet();
+    
     return (
         <div className={styles.productContainer}>
             <div>
