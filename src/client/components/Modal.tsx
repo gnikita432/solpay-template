@@ -41,7 +41,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
                             X
                         </button>
                     </div>
-                    <div>
+                    <div className={styles.modalcontent}>
                         <button className={styles.content} onClick={handlePayQRCode}>
                             Pay using QR CODE
                         </button>

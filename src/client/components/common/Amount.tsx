@@ -14,7 +14,8 @@ export const Amount: FC<AmountProps> = ({ amount, showZero }) => {
     const value = useMemo(() => {
         if (!amount) return NON_BREAKING_SPACE;
         if (amount.isGreaterThan(0)) {
-            return amount.toFormat(amount.decimalPlaces() < minDecimals ? minDecimals : amount.decimalPlaces());
+            const formatTo = amount?.decimalPlaces() || 0 < minDecimals ? minDecimals : amount.decimalPlaces();
+            return amount.toFormat(formatTo || 0);
         } else {
             return showZero ? '0' : NON_BREAKING_SPACE;
         }
