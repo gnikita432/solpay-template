@@ -18,7 +18,6 @@ export default function HomePage() {
             fetchCustomer();
         }
     }, [program]);
-    console.log(userComics);
     //Refetch products on wallet change
     useEffect(() => {
         fetch(GET_PRODUCTS_URL)

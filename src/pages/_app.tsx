@@ -10,7 +10,7 @@ import {
     SolflareWalletAdapter,
     TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
-import { QR_PAYMENT_URL } from '../client/utils/constants';
+import { QR_PAYMENT_URL, QR_CLAIM_URL } from '../client/utils/constants';
 import { clusterApiUrl } from '@solana/web3.js';
 import { AppInitialProps } from 'next/dist/shared/lib/utils';
 import { GlobalProvider } from '../client/components/context/GlobalProvider';
@@ -32,7 +32,7 @@ const App: FC<CustomAppProps> & { getInitialProps(appContext: AppContext): Promi
     const storeAddress = process.env.NEXT_PUBLIC_STORE_ADDRESS || '';
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
     const link = useMemo(() => new URL(`${baseURL}${QR_PAYMENT_URL}/`), [baseURL]);
-
+    const claimLink = useMemo(() => new URL(`${baseURL}${QR_CLAIM_URL}`), [baseURL]);
     const wallets = [
         new PhantomWalletAdapter(),
         new GlowWalletAdapter(),
@@ -51,6 +51,7 @@ const App: FC<CustomAppProps> & { getInitialProps(appContext: AppContext): Promi
                             link={link}
                             paymentMethod={paymentMethod.QRCode}
                             storeAddress={storeAddress}
+                            claimLink={claimLink}
                         >
                             <Component {...pageProps} />
                         </GlobalProvider>
@@ -65,7 +66,7 @@ App.getInitialProps = async (appContext) => {
     const props = await NextApp.getInitialProps(appContext);
     const { req } = appContext.ctx;
     const host = req?.headers.host || 'localhost:3000';
-    // const host = '672f-197-211-59-123.eu.ngrok.io';
+    // const host = 'd277-197-211-59-123.eu.ngrok.io';
     return {
         ...props,
         host,

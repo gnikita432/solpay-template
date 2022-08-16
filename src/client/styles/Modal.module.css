@@ -51,6 +51,7 @@
   margin-left: 0.5rem;
   background: none;
   padding-bottom: 2rem;
+  cursor: pointer;
 }
 
 .content {

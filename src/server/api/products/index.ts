@@ -3,7 +3,7 @@ import { cors, rateLimit } from '../../middleware';
 import products from '../../data/products.json';
 
 interface GetResponse {
-    id: number;
+    id: string;
     name: string;
     price: string;
     description: string;

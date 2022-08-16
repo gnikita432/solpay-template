@@ -1,16 +1,15 @@
-import { encodeURL, findReference, FindReferenceError, validateTransfer, ValidateTransferError } from '@solana/pay';
+import { encodeURL, findReference, FindReferenceError } from '@solana/pay';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { ConfirmedSignatureInfo, Keypair, PublicKey, TransactionSignature } from '@solana/web3.js';
-import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useGlobal } from '../hooks/useGlobal';
 import { PaymentStatus } from '../types';
 import { Confirmations } from '../types';
 
-export const useQRPayment = () => {
+export const useQRClaim = () => {
     const { connection } = useConnection();
-    const { link, requiredConfirmations = 1 } = useGlobal();
+    const { requiredConfirmations = 1, claimLink } = useGlobal();
     const router = useRouter();
     const [reference, setReference] = useState<PublicKey>();
     const [status, setStatus] = useState(PaymentStatus.New);
@@ -19,14 +18,14 @@ export const useQRPayment = () => {
     const progress = useMemo(() => confirmations / requiredConfirmations, [confirmations, requiredConfirmations]);
 
     const url = useMemo(() => {
-        const url = new URL(String(link));
+        const url = new URL(String(claimLink));
 
         if (reference) {
             url.searchParams.append('reference', reference.toBase58());
         }
 
         return encodeURL({ link: url });
-    }, [link, reference]);
+    }, [claimLink, reference]);
 
     const reset = useCallback(() => {
         setReference(undefined);
