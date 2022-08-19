@@ -1,34 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# S🕸️lpay Comics
 
-## Getting Started
+## Description 💡
+<p>Shop Comics Books using SOL and USDC Tokens through Solana Pay</p>
 
-First, run the development server:
+<p> Purpose: Solana Pay template for developer to integrate Pay via wallet Adapter OR Pay via QR code options in their Application</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+[Demo video](https://drive.google.com/file/d/1eSVFmaEbBcKAB-_YIxrrTnwJm4t4igfD/view?usp=sharing) 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+![ss1](https://user-images.githubusercontent.com/61223163/184954381-ca75b985-7c1c-46de-9ce6-b5875b496aa8.PNG)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## High level Overview 👩‍💻
 
-## Learn More
+![Solpay](https://user-images.githubusercontent.com/61223163/184955179-3da211d3-238a-4846-ab1f-81e0623c5331.png)
 
-To learn more about Next.js, take a look at the following resources:
+## Frameworks & Tools 🧰
+- **Frontend**: Next.js, TypeScript
+- **Backend**: Rust, Node.js, Express.js, Web 3.o
+- **IDE**: VS Code
+- **Version Control**: Git and GitHub
+- **Deployment**: Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployed on vercel 🌐
+Click Here to view the deployment!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+https://solpay-template.vercel.app/
 
-## Deploy on Vercel
+## Local Setup Instructions 💻
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Follow these steps to setup project locally:
+1. **Fork the repository:** Click the fork button.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. **Clone forked repository:** If you are using *Windows OS* use `Git Bash` to run all commands given below.
+    ```bash
+    git clone https://github.com/gnikita432/solpay-template
+    ```
+    
+## Now Run the poject locally:
+
+1. **Install dependencies:** Run the following to install the required dependencies.
+    
+    - Install the dependencies.  
+        ```node
+        yarn install
+        or
+        npm install
+        ```
+        
+2. **Run the project:** 
+    - Now run the Project locally on both server and client terminal
+        ```bash
+        yarn run dev
+        or
+        npm run dev 
+        ```
+3. **Open in browser:** 
+
+ [Click here](http://localhost:3000), or pase the following in your browser
+    ```text
+    http://localhost:3000
+    ```
+    
