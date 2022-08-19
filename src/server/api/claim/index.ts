@@ -45,10 +45,7 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
     const PROGRAM_ID = new PublicKey(MEMO_PROGRAM_ID);
     const instruction = new TransactionInstruction({
         programId: PROGRAM_ID,
-        keys: [
-            { pubkey: reference, isWritable: false, isSigner: false },
-            { pubkey: account, isWritable: false, isSigner: true },
-        ],
+        keys: [],
         data: Buffer.from(accountField, 'utf8'),
     });
 
