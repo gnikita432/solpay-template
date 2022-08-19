@@ -65,8 +65,8 @@ const App: FC<CustomAppProps> & { getInitialProps(appContext: AppContext): Promi
 App.getInitialProps = async (appContext) => {
     const props = await NextApp.getInitialProps(appContext);
     const { req } = appContext.ctx;
-    const host = req?.headers.host || 'localhost:3000';
-    // const host = 'd277-197-211-59-123.eu.ngrok.io';
+    // const host = req?.headers.host || 'localhost:3000';
+    const host = '54e9-129-205-124-105.eu.ngrok.io';
     return {
         ...props,
         host,

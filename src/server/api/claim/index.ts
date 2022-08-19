@@ -51,21 +51,20 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
         keys: [
             {
                 pubkey: keypair.publicKey,
-                isSigner:true,
-                isWritable:false
-            }
+                isSigner: true,
+                isWritable: false,
+            },
         ],
         data: Buffer.from(`SolPayComics:${accountField}`, 'utf8'),
     });
 
     // Add the transfer instruction to the transaction
     transaction.add(instruction);
-    
-    transaction.partialSign(keypair);
 
     const hashResponse = await connection.getLatestBlockhash('finalized');
     transaction.recentBlockhash = hashResponse.blockhash;
     transaction.feePayer = account;
+    transaction.sign(keypair);
 
     // Serialize and deserialize the transaction. This ensures consistent ordering of the account keys for signing.
     transaction = Transaction.from(
