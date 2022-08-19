@@ -1,7 +1,8 @@
-import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
 import { NextApiHandler } from 'next';
 import { cors, rateLimit } from '../../middleware';
-import { connection, MEMO_PROGRAM_ID } from '../../core';
+import { connection, MEMO_PROGRAM_ID, PRIVATE_KEY } from '../../core';
+import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes';
 
 interface GetResponse {
     label: string;
@@ -40,17 +41,27 @@ const post: NextApiHandler<PostResponse> = async (request, response) => {
     if (typeof accountField !== 'string') throw new Error('invalid account');
     const account = new PublicKey(accountField);
 
+    const keypair = Keypair.fromSecretKey(bs58.decode(PRIVATE_KEY));
+
     // Store pubkey in Solana memo program
     let transaction = new Transaction();
     const PROGRAM_ID = new PublicKey(MEMO_PROGRAM_ID);
     const instruction = new TransactionInstruction({
         programId: PROGRAM_ID,
-        keys: [],
-        data: Buffer.from(accountField, 'utf8'),
+        keys: [
+            {
+                pubkey: keypair.publicKey,
+                isSigner:true,
+                isWritable:false
+            }
+        ],
+        data: Buffer.from(`SolPayComics:${accountField}`, 'utf8'),
     });
 
     // Add the transfer instruction to the transaction
     transaction.add(instruction);
+    
+    transaction.partialSign(keypair);
 
     const hashResponse = await connection.getLatestBlockhash('finalized');
     transaction.recentBlockhash = hashResponse.blockhash;
